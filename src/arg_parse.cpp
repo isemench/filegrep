@@ -2,39 +2,37 @@
 /// \file arg_parse.cpp
 ///
 
+#include "arg_parse.hpp"
+
 #include <iostream>
-#include <sstream>
 #include <stdexcept>
-#include <string_view>
 #include <vector>
 
 namespace {
 
-constexpr int ARG_MAX = 3;
+constexpr int ARG_NUM = 3;
 
-constexpr auto usage_str = "Usage:\tfilegrep {PATTERN} dir_path\n";
+constexpr auto USAGE_STR = "Usage:\tfilegrep pattern dir_path\n";
 
-constexpr auto too_many_args_str = "Too many parameters provided";
+constexpr auto WRONG_ARGS_STR = "Incorrect parameters provided";
 
 } // namespace
 
 namespace grep {
 
-void parse_args(int const argc, char* const argv[])
+Args parse_args(int const argc, char* const argv[])
 {
-    if (argc > ARG_MAX) {
-        throw std::invalid_argument(too_many_args_str);
+    if (argc != ARG_NUM) {
+        throw std::invalid_argument(WRONG_ARGS_STR);
     }
-    std::vector<std::string_view> const args{argv + 1, argv + argc};
-    for (auto const arg : args) {
-        std::cout << arg << " ";
-    }
-    std::cout << "\n";
+
+    std::vector<std::string_view> const arg_list{argv + 1, argv + argc};
+    return Args{arg_list[0], arg_list[1]};
 }
 
-void usage()
+void usage() noexcept
 {
-    std::cout << usage_str;
+    std::cout << USAGE_STR;
 }
 
 } // namespace grep

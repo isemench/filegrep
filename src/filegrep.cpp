@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     auto result = EXIT_SUCCESS;
 
     try {
-        grep::parse_args(argc, argv);
+        auto const arguments = grep::parse_args(argc, argv);
     }
     catch (std::exception const& e) {
         std::cout << e.what() << "\n";

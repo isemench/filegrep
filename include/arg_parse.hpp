@@ -5,11 +5,18 @@
 #ifndef ARG_PARSE_HPP
 #define ARG_PARSE_HPP
 
+#include <string_view>
+
 namespace grep {
 
-void parse_args(int const argc, char* const argv[]);
+struct Args {
+    std::string_view pattern{};
+    std::string_view dir{};
+};
 
-void usage();
+Args parse_args(int const argc, char* const argv[]);
+
+void usage() noexcept;
 
 } // namespace grep
 
