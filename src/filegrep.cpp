@@ -1,14 +1,26 @@
+///
+/// \file filegrep.cpp
+///
+
+#include "arg_parse.hpp"
+
 #include <iostream>
+#include <iterator>
 
-int main(int argc, char *argv[])
+#include <stdlib.h>
+
+int main(int argc, char* argv[])
 {
-    std::cout << "Filegrep\n";
-    std::cout << "Arguments are: ";
-    for (auto i = 1; i < argc; i++)
-    {
-        std::cout << argv[i] << " ";
-    }
-    std::cout << "\n";
+    auto result = EXIT_SUCCESS;
 
-    return 0;
+    try {
+        grep::parse_args(argc, argv);
+    }
+    catch (std::exception const& e) {
+        std::cout << e.what() << "\n";
+        grep::usage();
+        result = EXIT_FAILURE;
+    }
+
+    return result;
 }
