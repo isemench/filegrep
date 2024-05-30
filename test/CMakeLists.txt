@@ -13,6 +13,7 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(filegrep_test
     ${PROJECT_SOURCE_DIR}/src/regex_lookup.cpp
+    ${PROJECT_SOURCE_DIR}/src/grepped_file.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/regex_string_test.cpp
 )

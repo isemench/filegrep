@@ -13,6 +13,7 @@ add_executable(filegrep
     src/filegrep.cpp
     src/arg_parse.cpp
     src/regex_lookup.cpp
+    src/grepped_file.cpp
 )
 
 target_include_directories(filegrep
