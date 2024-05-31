@@ -32,10 +32,18 @@ std::int32_t launch_app(int const arg_count, char* const args_list[])
         };
 
         auto regex = std::regex(arguments.pattern.data());
+        auto files_to_grep = std::vector<Grepped_file>();
+        auto tasks = std::vector<std::future<void>>{};
         for (auto const& file : file_list) {
-            auto file_to_grep = Grepped_file(file, regex, std::cout, creator);
-            std::async(std::launch::async, &Grepped_file::find_and_print_results, &file_to_grep)
-                .get();
+            files_to_grep.emplace_back(file, regex, std::cout, creator);
+        }
+        for (auto& file_to_grep : files_to_grep) {
+            tasks.push_back(std::async(std::launch::async, &Grepped_file::find_and_print_results,
+                                       &file_to_grep));
+        }
+
+        for (auto& task : tasks) {
+            task.get();
         }
     }
     catch (std::exception const& e) {
