@@ -12,7 +12,7 @@ namespace grep {
 
 using File_list = std::vector<std::string>;
 
-File_list enumerate_dir(std::string_view const& dir_name);
+File_list find_files(std::string_view const& dir_name);
 
 } // namespace grep
 

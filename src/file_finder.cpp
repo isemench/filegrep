@@ -9,7 +9,7 @@
 
 namespace grep {
 
-File_list enumerate_dir(std::string_view const& dir_name)
+File_list find_files(std::string_view const& dir_name)
 {
     using path = std::filesystem::path;
     using dir_iter = std::filesystem::recursive_directory_iterator;

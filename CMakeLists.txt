@@ -12,9 +12,9 @@ project(filegrep VERSION 0.1.0 LANGUAGES CXX)
 add_executable(filegrep
     src/filegrep.cpp
     src/arg_parse.cpp
-    src/regex_lookup.cpp
     src/grepped_file.cpp
     src/file_finder.cpp
+    src/launcher.cpp
 )
 
 target_include_directories(filegrep

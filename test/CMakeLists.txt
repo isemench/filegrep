@@ -1,5 +1,5 @@
 #
-# File: CMakeLists.txt
+# File: test/CMakeLists.txt
 #
 
 include(FetchContent)
@@ -12,8 +12,8 @@ FetchContent_Declare(googletest
 FetchContent_MakeAvailable(googletest)
 
 add_executable(filegrep_test
-    ${PROJECT_SOURCE_DIR}/src/regex_lookup.cpp
     ${PROJECT_SOURCE_DIR}/src/grepped_file.cpp
+    ${PROJECT_SOURCE_DIR}/src/file_finder.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/regex_string_test.cpp
 )
