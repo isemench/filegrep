@@ -9,6 +9,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(filegrep VERSION 0.1.0 LANGUAGES CXX)
 
+if(PROJECT_IS_TOP_LEVEL)
+    include(Sanitizers.cmake)
+endif()
+
 add_executable(filegrep
     src/filegrep.cpp
     src/arg_parse.cpp
