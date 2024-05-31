@@ -10,6 +10,19 @@
 #include <iostream>
 #include <ostream>
 
+namespace {
+std::ostream& bold_mode(std::ostream& os)
+{
+    return os << "\e[1m";
+}
+
+std::ostream& no_bold_mode(std::ostream& os)
+{
+    return os << "\e[0m";
+}
+
+} // namespace
+
 namespace grep {
 
 constexpr std::uint16_t Grepped_file::def_str_len;
@@ -36,11 +49,19 @@ void Grepped_file::find_and_print_results() const noexcept
     }
 
     String_array buffer{};
+    std::uint32_t line_no{0U};
     while (input->getline(buffer.data(), def_str_len)) {
+        line_no++;
         for (auto it = Regex_iter(buffer.begin(), buffer.end(), m_pattern); it != Regex_iter{};
              ++it) {
-            m_output << std::filesystem::path(m_file_name).filename().string() << ": " << it->str()
-                     << "\n";
+            auto const& file_name = std::filesystem::path(m_file_name).filename().string();
+            auto line_pos = it->position();
+            static constexpr auto separator{':'};
+
+            m_output << file_name << separator << line_no << separator << line_pos << separator;
+            m_output << it->format("$`");
+            m_output << bold_mode << it->format("$&") << no_bold_mode;
+            m_output << it->format("$'") << "\n";
         }
     }
 }
