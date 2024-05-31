@@ -27,7 +27,7 @@ public:
     Grepped_file(std::string fname, std::regex const& regex, std::ostream& out,
                  File_istream_creator creator) noexcept;
 
-    void find_and_print_results() const noexcept;
+    std::string find_and_print_results() const noexcept;
 };
 
 } // namespace grep

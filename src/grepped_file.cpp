@@ -50,10 +50,7 @@ Grepped_file::Grepped_file(std::string fname, std::regex const& regex, std::ostr
 
 std::string Grepped_file::find_and_print_results() const noexcept
 {
-    // using String_array = std::array<char, def_str_len>;
-    using String_array = std::string;
-    using String_array_iter = String_array::iterator;
-    using Regex_iter = std::regex_iterator<String_array_iter>;
+    using Regex_iter = std::sregex_iterator;
 
     auto input = m_stream_creator(m_file_name);
     std::ostringstream output{};
@@ -62,7 +59,7 @@ std::string Grepped_file::find_and_print_results() const noexcept
         return output.str();
     }
 
-    String_array buffer{};
+    std::string buffer{};
     std::uint32_t line_no{1U};
     while (getline(*input, buffer, def_str_len)) {
         for (auto it = Regex_iter(buffer.begin(), buffer.end(), m_pattern); it != Regex_iter{};
