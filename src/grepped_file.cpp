@@ -21,6 +21,18 @@ std::ostream& no_bold_mode(std::ostream& os)
     return os << "\e[0m";
 }
 
+std::istream& getline(std::istream& is, std::string& str, std::streamsize n,
+                      char const delim = '\n')
+{
+    str.resize(n);
+    is.getline(&str[0], n, delim);
+    if (!is.fail()) {
+        std::streamsize const read = std::char_traits<char>::length(&str[0]);
+        str.resize(read);
+    }
+    return is;
+}
+
 } // namespace
 
 namespace grep {
@@ -36,34 +48,40 @@ Grepped_file::Grepped_file(std::string fname, std::regex const& regex, std::ostr
 {
 }
 
-void Grepped_file::find_and_print_results() const noexcept
+std::string Grepped_file::find_and_print_results() const noexcept
 {
-    using String_array = std::array<char, def_str_len>;
+    // using String_array = std::array<char, def_str_len>;
+    using String_array = std::string;
     using String_array_iter = String_array::iterator;
     using Regex_iter = std::regex_iterator<String_array_iter>;
 
     auto input = m_stream_creator(m_file_name);
+    std::ostringstream output{};
     if (input->fail()) {
-        m_output << "Error: " << m_file_name << ": file not found\n";
-        return;
+        output << "Error: " << m_file_name << ": file not found\n";
+        return output.str();
     }
 
     String_array buffer{};
-    std::uint32_t line_no{0U};
-    while (input->getline(buffer.data(), def_str_len)) {
-        line_no++;
+    std::uint32_t line_no{1U};
+    while (getline(*input, buffer, def_str_len)) {
         for (auto it = Regex_iter(buffer.begin(), buffer.end(), m_pattern); it != Regex_iter{};
              ++it) {
             auto const& file_name = std::filesystem::path(m_file_name).filename().string();
-            auto line_pos = it->position();
+            auto line_pos = it->position() + 1;
             static constexpr auto separator{':'};
 
-            m_output << file_name << separator << line_no << separator << line_pos << separator;
-            m_output << it->format("$`");
-            m_output << bold_mode << it->format("$&") << no_bold_mode;
-            m_output << it->format("$'") << "\n";
+            if (it->length() > 0) {
+                output << file_name << separator << line_no << separator << line_pos << separator;
+                output << it->format("$`");
+                output << bold_mode << it->format("$&") << no_bold_mode;
+                output << it->format("$'") << "\n";
+            }
         }
+        line_no++;
     }
+
+    return output.str();
 }
 
 } // namespace grep

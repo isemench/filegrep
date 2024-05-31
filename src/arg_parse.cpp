@@ -12,7 +12,8 @@ namespace {
 
 constexpr int ARG_NUM = 3;
 
-constexpr auto USAGE_STR = "Usage:\tfilegrep pattern dir_path\n";
+constexpr auto USAGE_STR = "Usage:\tfilegrep pattern dir_path\nWhen special characters are used, "
+                           "the pattern should be placed into the single quotes\n";
 
 constexpr auto WRONG_ARGS_STR = "Incorrect parameters provided";
 

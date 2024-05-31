@@ -33,7 +33,7 @@ std::int32_t launch_app(int const arg_count, char* const args_list[])
 
         auto regex = std::regex(arguments.pattern.data());
         auto files_to_grep = std::vector<Grepped_file>();
-        auto tasks = std::vector<std::future<void>>{};
+        auto tasks = std::vector<std::future<std::string>>{};
         for (auto const& file : file_list) {
             files_to_grep.emplace_back(file, regex, std::cout, creator);
         }
@@ -43,7 +43,7 @@ std::int32_t launch_app(int const arg_count, char* const args_list[])
         }
 
         for (auto& task : tasks) {
-            task.get();
+            std::cout << task.get();
         }
     }
     catch (std::exception const& e) {
