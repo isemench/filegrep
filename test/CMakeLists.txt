@@ -11,6 +11,8 @@ FetchContent_Declare(googletest
 
 FetchContent_MakeAvailable(googletest)
 
+include(GoogleTest)
+
 add_executable(filegrep_test
     ${PROJECT_SOURCE_DIR}/src/grepped_file.cpp
     ${PROJECT_SOURCE_DIR}/src/file_finder.cpp
@@ -24,7 +26,5 @@ target_include_directories(filegrep_test
 )
 
 target_link_libraries(filegrep_test PRIVATE GTest::gtest_main)
-
-include(GoogleTest)
 
 gtest_discover_tests(filegrep_test)
