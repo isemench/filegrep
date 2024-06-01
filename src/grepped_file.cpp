@@ -11,14 +11,14 @@
 #include <ostream>
 
 namespace {
-std::ostream& bold_mode(std::ostream& os)
+std::ostream& green_color_mode(std::ostream& os)
 {
-    return os << "\e[1m";
+    return os << "\e[32m";
 }
 
-std::ostream& no_bold_mode(std::ostream& os)
+std::ostream& def_color_mode(std::ostream& os)
 {
-    return os << "\e[0m";
+    return os << "\e[39m";
 }
 
 std::istream& getline(std::istream& is, std::string& str, std::streamsize n,
@@ -71,7 +71,7 @@ std::string Grepped_file::find_and_print_results() const noexcept
             if (it->length() > 0) {
                 output << file_name << separator << line_no << separator << line_pos << separator;
                 output << it->format("$`");
-                output << bold_mode << it->format("$&") << no_bold_mode;
+                output << green_color_mode << it->format("$&") << def_color_mode;
                 output << it->format("$'") << "\n";
             }
         }
