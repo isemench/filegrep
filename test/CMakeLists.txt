@@ -14,10 +14,13 @@ FetchContent_MakeAvailable(googletest)
 include(GoogleTest)
 
 add_executable(filegrep_test
+    ${PROJECT_SOURCE_DIR}/src/arg_parse.cpp
     ${PROJECT_SOURCE_DIR}/src/grepped_file.cpp
     ${PROJECT_SOURCE_DIR}/src/file_finder.cpp
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/regex_string_test.cpp
+    src/arg_parser_test.cpp
+    src/file_finder_test.cpp
+    src/grepped_file_test.cpp
 )
 
 target_include_directories(filegrep_test
@@ -25,6 +28,9 @@ target_include_directories(filegrep_test
         ${PROJECT_SOURCE_DIR}/include
 )
 
-target_link_libraries(filegrep_test PRIVATE GTest::gtest_main)
+target_link_libraries(filegrep_test
+    PRIVATE
+        GTest::gtest_main
+)
 
 gtest_discover_tests(filegrep_test)

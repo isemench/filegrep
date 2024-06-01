@@ -23,7 +23,7 @@ add_executable(filegrep
 
 target_include_directories(filegrep
     PRIVATE
-        ${PROJECT_SOURCE_DIR}/include
+        include
 )
 
 include(CTest)
