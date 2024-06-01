@@ -24,7 +24,11 @@ std::int32_t launch_app(int const arg_count, char* const args_list[], std::ostre
 
     try {
         auto const arguments = parse_args(arg_count, args_list);
-        auto const file_list = find_files(arguments.dir);
+        auto const find_result = find_files(arguments.dir);
+
+        if (!find_result.error.empty()) {
+            throw std::invalid_argument(find_result.error);
+        }
 
         File_istream_creator creator =
             [](std::string const& file_name) -> std::unique_ptr<std::istream> {
@@ -34,7 +38,7 @@ std::int32_t launch_app(int const arg_count, char* const args_list[], std::ostre
         auto pattern = std::regex(arguments.pattern.data());
         auto files_to_grep = std::vector<Grepped_file>();
         auto tasks = std::vector<std::future<std::string>>{};
-        for (auto const& file : file_list) {
+        for (auto const& file : find_result.files) {
             files_to_grep.emplace_back(file, pattern, creator);
         }
 

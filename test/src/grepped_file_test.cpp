@@ -1,5 +1,6 @@
-#include "file_finder.hpp"
 #include "grepped_file.hpp"
+
+#include "file_finder.hpp"
 
 #include <gtest/gtest.h>
 
@@ -29,7 +30,7 @@ TEST_F(Regex_lookup_test, Enum_files)
 {
     std::cout << "Current dir: " << std::filesystem::current_path() << "\n";
     auto files = grep::find_files(".");
-    for (auto const& file : files) {
+    for (auto const& file : files.files) {
         std::cout << file << "\n";
     }
 }

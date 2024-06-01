@@ -1,0 +1,113 @@
+The Linux Kernel API
+List Management Functions
+
+void INIT_LIST_HEAD(struct list_head *list)
+
+    Initialize a list_head structure
+
+Parameters
+
+struct list_head *list
+
+    list_head structure to be initialized.
+
+Description
+
+Initializes the list_head to point to itself. If it is a list header, the result is an empty list.
+
+void list_add(struct list_head *new, struct list_head *head)
+
+    add a new entry
+
+Parameters
+
+struct list_head *new
+
+    new entry to be added
+struct list_head *head
+
+    list head to add it after
+
+Description
+
+Insert a new entry after the specified head. This is good for implementing stacks.
+
+void list_add_tail(struct list_head *new, struct list_head *head)
+
+    add a new entry
+
+Parameters
+
+struct list_head *new
+
+    new entry to be added
+struct list_head *head
+
+    list head to add it before
+
+Description
+
+Insert a new entry before the specified head. This is useful for implementing queues.
+
+void list_del(struct list_head *entry)
+
+    deletes entry from list.
+
+Parameters
+
+struct list_head *entry
+
+    the element to delete from the list.
+
+Note
+
+list_empty() on entry does not return true after this, the entry is in an undefined state.
+
+void list_replace(struct list_head *old, struct list_head *new)
+
+    replace old entry by new one
+
+Parameters
+
+struct list_head *old
+
+    the element to be replaced
+struct list_head *new
+
+    the new element to insert
+
+Description
+
+If old was empty, it will be overwritten.
+
+void list_replace_init(struct list_head *old, struct list_head *new)
+
+    replace old entry by new one and initialize the old one
+
+Parameters
+
+struct list_head *old
+
+    the element to be replaced
+struct list_head *new
+
+    the new element to insert
+
+Description
+
+If old was empty, it will be overwritten.
+
+void list_swap(struct list_head *entry1, struct list_head *entry2)
+
+    replace entry1 with entry2 and re-add entry1 at entry2’s position
+
+Parameters
+
+struct list_head *entry1
+
+    the location to place entry2
+struct list_head *entry2
+
+    the location to place entry1
+
+

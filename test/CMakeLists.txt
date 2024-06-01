@@ -34,3 +34,8 @@ target_link_libraries(filegrep_test
 )
 
 gtest_discover_tests(filegrep_test)
+
+file(
+    COPY ${CMAKE_CURRENT_SOURCE_DIR}/data
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
+)

@@ -5,20 +5,27 @@
 #include "file_finder.hpp"
 
 #include <filesystem>
+#include <sstream>
 
 namespace grep {
 
-File_list find_files(std::string_view const& dir_name)
+Find_result find_files(std::string_view const& dir_name)
 {
     using Path = std::filesystem::path;
     using Dir_iterator = std::filesystem::recursive_directory_iterator;
+    auto const options = std::filesystem::directory_options::skip_permission_denied;
 
-    File_list result{};
+    Find_result result{};
     Path const dir{dir_name};
-    for (auto const& entry : Dir_iterator{dir}) {
-        if (entry.is_regular_file()) {
-            result.push_back(entry.path().string());
+    try {
+        for (auto const& entry : Dir_iterator{dir, options}) {
+            if (entry.is_regular_file()) {
+                result.files.push_back(entry.path().string());
+            }
         }
+    }
+    catch (std::filesystem::filesystem_error const& e) {
+        result.error = e.what();
     }
     return result;
 }
