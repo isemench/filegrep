@@ -5,7 +5,6 @@
 #include "file_finder.hpp"
 
 #include <filesystem>
-#include <iostream>
 
 namespace grep {
 

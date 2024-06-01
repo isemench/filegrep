@@ -48,7 +48,7 @@ std::int32_t launch_app(int const arg_count, char* const args_list[])
     }
     catch (std::exception const& e) {
         std::cout << e.what() << "\n";
-        grep::usage();
+        grep::usage(std::cout);
         result = EXIT_FAILURE;
     }
 

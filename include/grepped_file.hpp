@@ -18,7 +18,6 @@ using File_istream_creator = std::unique_ptr<std::istream> (*)(std::string const
 class Grepped_file {
     std::string const m_file_name;
     std::regex const& m_pattern;
-    std::ostream& m_output;
     File_istream_creator m_stream_creator;
 
     static constexpr std::uint16_t def_str_len = 512U;

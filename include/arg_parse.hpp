@@ -5,6 +5,7 @@
 #ifndef ARG_PARSE_HPP
 #define ARG_PARSE_HPP
 
+#include <iosfwd>
 #include <string_view>
 
 namespace grep {
@@ -16,7 +17,7 @@ struct Args {
 
 Args parse_args(int const argc, char* const argv[]);
 
-void usage() noexcept;
+void usage(std::ostream& os) noexcept;
 
 } // namespace grep
 
