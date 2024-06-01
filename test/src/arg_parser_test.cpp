@@ -2,7 +2,7 @@
 /// \file arg_parser_test.cpp
 ///
 
-#include "arg_parse.hpp"
+#include "arg_parser.hpp"
 
 #include <gtest/gtest.h>
 

@@ -4,7 +4,7 @@
 
 #include "launcher.hpp"
 
-#include "arg_parse.hpp"
+#include "arg_parser.hpp"
 #include "file_finder.hpp"
 #include "grepped_file.hpp"
 

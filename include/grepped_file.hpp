@@ -7,7 +7,6 @@
 
 #include <cstdint>
 #include <iosfwd>
-#include <memory>
 #include <regex>
 #include <string>
 

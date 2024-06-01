@@ -15,7 +15,7 @@ endif()
 
 add_executable(filegrep
     src/filegrep.cpp
-    src/arg_parse.cpp
+    src/arg_parser.cpp
     src/grepped_file.cpp
     src/file_finder.cpp
     src/launcher.cpp

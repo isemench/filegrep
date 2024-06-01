@@ -14,7 +14,7 @@ FetchContent_MakeAvailable(googletest)
 include(GoogleTest)
 
 add_executable(filegrep_test
-    ${PROJECT_SOURCE_DIR}/src/arg_parse.cpp
+    ${PROJECT_SOURCE_DIR}/src/arg_parser.cpp
     ${PROJECT_SOURCE_DIR}/src/grepped_file.cpp
     ${PROJECT_SOURCE_DIR}/src/file_finder.cpp
 
