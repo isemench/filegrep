@@ -40,16 +40,13 @@ constexpr std::uint16_t Grepped_file::def_str_len;
 
 Grepped_file::Grepped_file(std::string fname, std::regex const& regex, std::ostream& out,
                            File_istream_creator creator) noexcept
-    : m_file_name{std::move(fname)}
-    , m_pattern{regex}
-    , m_output{out}
-    , m_stream_creator{std::move(creator)}
+    : m_file_name{std::move(fname)}, m_pattern{regex}, m_stream_creator{std::move(creator)}
 {
 }
 
 std::string Grepped_file::find_and_print_results() const noexcept
 {
-    using Regex_iter = std::sregex_iterator;
+    using Regex_iterator = std::sregex_iterator;
 
     auto input = m_stream_creator(m_file_name);
     std::ostringstream output{};
@@ -61,8 +58,8 @@ std::string Grepped_file::find_and_print_results() const noexcept
     std::string buffer{};
     std::uint32_t line_no{1U};
     while (getline(*input, buffer, def_str_len)) {
-        for (auto it = Regex_iter(buffer.begin(), buffer.end(), m_pattern); it != Regex_iter{};
-             ++it) {
+        for (auto it = Regex_iterator(buffer.begin(), buffer.end(), m_pattern);
+             it != Regex_iterator{}; ++it) {
             auto const& file_name = std::filesystem::path(m_file_name).filename().string();
             auto line_pos = it->position() + 1;
             static constexpr auto separator{':'};

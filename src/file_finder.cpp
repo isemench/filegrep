@@ -10,12 +10,12 @@ namespace grep {
 
 File_list find_files(std::string_view const& dir_name)
 {
-    using path = std::filesystem::path;
-    using dir_iter = std::filesystem::recursive_directory_iterator;
+    using Path = std::filesystem::path;
+    using Dir_iterator = std::filesystem::recursive_directory_iterator;
 
     File_list result{};
-    path const dir{dir_name};
-    for (auto const& entry : dir_iter{dir}) {
+    Path const dir{dir_name};
+    for (auto const& entry : Dir_iterator{dir}) {
         if (entry.is_regular_file()) {
             result.push_back(entry.path().string());
         }
