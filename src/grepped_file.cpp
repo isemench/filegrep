@@ -10,12 +10,13 @@
 #include <ostream>
 
 namespace {
+
 std::ostream& green_color_mode(std::ostream& os)
 {
     return os << "\e[32m";
 }
 
-std::ostream& def_color_mode(std::ostream& os)
+std::ostream& default_color_mode(std::ostream& os)
 {
     return os << "\e[39m";
 }
@@ -48,8 +49,9 @@ std::string Grepped_file::find_and_print_results() const noexcept
 {
     using Regex_iterator = std::sregex_iterator;
 
-    auto input = m_stream_creator(m_file_name);
     std::ostringstream output{};
+
+    auto input = m_stream_creator(m_file_name);
     if (input->fail()) {
         output << "Error: " << m_file_name << ": file not found\n";
         return output.str();
@@ -64,10 +66,14 @@ std::string Grepped_file::find_and_print_results() const noexcept
             auto line_pos = it->position() + 1;
             static constexpr auto separator{':'};
 
+            // When pattern is wide, like ".*", the iterator always returns a second match as an
+            // empty string. This check is done to exclude such a match.
             if (it->length() > 0) {
+                // Write the file name, line number, line offset, then the whole string with the
+                // match emphasized by the green color. Delimiter for the fields is colon.
                 output << file_name << separator << line_no << separator << line_pos << separator;
                 output << it->format("$`");
-                output << green_color_mode << it->format("$&") << def_color_mode;
+                output << green_color_mode << it->format("$&") << default_color_mode;
                 output << it->format("$'") << "\n";
             }
         }
