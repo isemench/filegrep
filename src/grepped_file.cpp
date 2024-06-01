@@ -38,7 +38,7 @@ namespace grep {
 
 constexpr std::uint16_t Grepped_file::def_str_len;
 
-Grepped_file::Grepped_file(std::string fname, std::regex const& regex, std::ostream& out,
+Grepped_file::Grepped_file(std::string fname, std::regex const& regex,
                            File_istream_creator creator) noexcept
     : m_file_name{std::move(fname)}, m_pattern{regex}, m_stream_creator{std::move(creator)}
 {

@@ -21,8 +21,8 @@ TEST_F(Regex_lookup_test, Test)
     grep::File_istream_creator creator = [](std::string const&) -> std::unique_ptr<std::istream> {
         return std::make_unique<std::istringstream>(test_string);
     };
-    grep::Grepped_file test_file{"test_text_file.txt", pattern, std::cout, creator};
-    test_file.find_and_print_results();
+    grep::Grepped_file test_file{"test_text_file.txt", pattern, creator};
+    std::cout << test_file.find_and_print_results();
 }
 
 TEST_F(Regex_lookup_test, Enum_files)

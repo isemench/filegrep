@@ -23,8 +23,7 @@ class Grepped_file {
     static constexpr std::uint16_t def_str_len = 512U;
 
 public:
-    Grepped_file(std::string fname, std::regex const& regex, std::ostream& out,
-                 File_istream_creator creator) noexcept;
+    Grepped_file(std::string fname, std::regex const& regex, File_istream_creator creator) noexcept;
 
     std::string find_and_print_results() const noexcept;
 };

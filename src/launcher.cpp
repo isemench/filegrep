@@ -10,15 +10,15 @@
 
 #include <fstream>
 #include <future>
-#include <iostream>
 #include <memory>
+#include <ostream>
 #include <regex>
 
 #include <stdlib.h>
 
 namespace grep {
 
-std::int32_t launch_app(int const arg_count, char* const args_list[])
+std::int32_t launch_app(int const arg_count, char* const args_list[], std::ostream& output)
 {
     auto result = EXIT_SUCCESS;
 
@@ -31,24 +31,25 @@ std::int32_t launch_app(int const arg_count, char* const args_list[])
             return std::make_unique<std::ifstream>(file_name);
         };
 
-        auto regex = std::regex(arguments.pattern.data());
+        auto pattern = std::regex(arguments.pattern.data());
         auto files_to_grep = std::vector<Grepped_file>();
         auto tasks = std::vector<std::future<std::string>>{};
         for (auto const& file : file_list) {
-            files_to_grep.emplace_back(file, regex, std::cout, creator);
+            files_to_grep.emplace_back(file, pattern, creator);
         }
-        for (auto& file_to_grep : files_to_grep) {
-            tasks.push_back(std::async(std::launch::async, &Grepped_file::find_and_print_results,
-                                       &file_to_grep));
+
+        for (auto& file : files_to_grep) {
+            tasks.push_back(
+                std::async(std::launch::async, &Grepped_file::find_and_print_results, &file));
         }
 
         for (auto& task : tasks) {
-            std::cout << task.get();
+            output << task.get();
         }
     }
     catch (std::exception const& e) {
-        std::cout << e.what() << "\n";
-        grep::usage(std::cout);
+        output << e.what() << "\n";
+        grep::usage(output);
         result = EXIT_FAILURE;
     }
 
